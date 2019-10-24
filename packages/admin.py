@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Package
+
+class PackageAdmin(admin.ModelAdmin):
+    list_display = ('id' ,'destination', 'name', 'address', 'email', 'number')
+    list_display_links = ('id', 'destination')
+    
+
+admin.site.register(Package, PackageAdmin)
