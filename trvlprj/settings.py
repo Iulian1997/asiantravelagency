@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'pages.apps.PagesConfig',
+    'destinations.apps.DestinationsConfig',
+    'packages.apps.PackagesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'trvlprj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'traveldb',
+        'USER': 'postgres',
+        'PASSWORD': 'asia',
+        'HOST': 'localhost'
+
     }
 }
 
