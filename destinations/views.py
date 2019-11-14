@@ -9,7 +9,7 @@ from .models import Destination
 def index(request):
     destinations = Destination.objects.order_by('-list_date').filter(is_published=True)
 
-    paginator = Paginator(destinations, 6)
+    paginator = Paginator(destinations, 9)
     page = request.GET.get('page')
     paged_destinations = paginator.get_page(page)
 
