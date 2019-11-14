@@ -42,6 +42,12 @@ def search(request):
         if city:
             queryset_list = queryset_list.filter(city__iexact=city)
 
+    # Search by country
+    if 'country' in request.GET:
+        country = request.GET['country']
+        if country:
+            queryset_list = queryset_list.filter(country__iexact=country)
+
     # Search by price
     if 'cost' in request.GET:
         cost = request.GET['cost']
