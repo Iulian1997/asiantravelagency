@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'destinations.apps.DestinationsConfig',
     'packages.apps.PackagesConfig',
+    'hotels.apps.HotelsConfig',
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

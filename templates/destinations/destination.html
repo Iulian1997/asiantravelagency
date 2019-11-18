@@ -154,7 +154,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+                <h5 class="modal-title" id="inquiryModalLabel">Book Your Holiday</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
@@ -162,27 +162,100 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="property_name" class="col-form-label">Property:</label>
-                        <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
+                        <label for="destination_name" class="col-form-label">Destination:</label>
+                        <input type="text" name="listing" class="form-control" value="{{ destination.name }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" name="name" class="form-control" required>
+                        <label for="inputState">Hotel:</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Hotel A</option>
+                            <option>Hotel B</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="email" class="col-form-label">Email:</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <label for="inputState">Room Type:</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Single En Suite</option>
+                            <option>Double En Suite</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="phone" class="col-form-label">Phone:</label>
-                        <input type="text" name="phone" class="form-control">
+                        <label for="inputState">Number of Guests:</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4+</option>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="message" class="col-form-label">Message:</label>
-                        <textarea name="message" class="form-control"></textarea>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <label class="form-check-label" for="inlineCheckbox1">Breakfast</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                <label class="form-check-label" for="inlineCheckbox2">Transport</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email:</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="phone" class="col-form-label">Phone:</label>
+                                <input type="text" name="phone" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="well">
+                                    <div class="form-group">
+                                        <label>Check in:</label>
+                                        <input type="date" class="form-control" id="exampleInputDOB1"
+                                            placeholder="Date of Birth" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="well">
+                                    <div class="form-group">
+                                        <label>Check out:</label>
+                                        <input type="date" class="form-control" id="exampleInputDOB1"
+                                            placeholder="Date of Birth" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="visa-number" class="col-form-label">Visa Number:</label>
+                                <input type="text" name="visa-number" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="visa-number" class="col-form-label">Passport Number:</label>
+                                <input type="text" name="passport-number" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
                     <hr>
-                    <input type="submit" value="Send" class="btn btn-block btn-secondary">
+                    <input type="submit" value="Add to Cart" class="btn btn-block btn-secondary">
                 </form>
             </div>
         </div>
