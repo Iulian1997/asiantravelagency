@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'packages.apps.PackagesConfig',
     'hotels.apps.HotelsConfig',
     'accounts.apps.AccountsConfig',
+    'bookings.apps.BookingsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -160,7 +160,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="{% url 'booking' %}" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    {% else %}
+                    <input type="hidden" name="user_id" value="0">
+                    {% endif %}
+                    <input type="hidden" name="package_id" value="{{ package.id }}">
                     <div class="form-group">
                         <label for="destination_name" class="col-form-label">Destination:</label>
                         <input type="text" name="listing" class="form-control" value="{{ destination.name }}" disabled>
@@ -172,21 +179,31 @@
                             <option>Hotel B</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="inputState">Room Type:</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Single En Suite</option>
-                            <option>Double En Suite</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputState">Number of Guests:</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4+</option>
-                        </select>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="inputState">Room Type:</label>
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Single En Suite</option>
+                                        <option>Double En Suite</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="inputState">Number of Guests:</label>
+                                    <select id="inputState" class="form-control">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -202,11 +219,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" name="name" class="form-control" {% if user.is_authenticated %}
+                            value="{{ user.first_name }} {{ user.last_name}}" {% endif %} required>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="email" class="col-form-label">Email:</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <input type="email" name="email" class="form-control" {% if user.is_authenticated %}
+                                    value="{{ user.email }}" {% endif %} required>
                             </div>
                         </div>
                         <div class="col">
