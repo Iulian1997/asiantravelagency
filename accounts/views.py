@@ -51,7 +51,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
-            return redirect('cart')
+            return redirect('order_summary')
         else:
             messages.error(request, 'Invalid credentials.')
             return redirect('login')
@@ -74,10 +74,10 @@ def order_summary(request):
     return render(request, 'cart/order_summary.html', context)
 
 def checkout(request):
-    booking = Booking.objects.all()
+    booking = Package.objects.order_by('-contact_date').filter(user_id=request.user.id)
 
     context = {
-        'booking': booking
+        'bookings': booking
     }
 
     return render(request, 'cart/checkout.html', context)

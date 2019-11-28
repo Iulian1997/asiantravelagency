@@ -23,7 +23,7 @@
                     <a href="{% url 'index' %}">
                         <i class="fas fa-home"></i> Home</a>
                 </li>
-                <li class="breadcrumb-item active"> Cart</li>
+                <li class="breadcrumb-item active"> Order Summary</li>
             </ol>
         </nav>
     </div>
@@ -39,48 +39,82 @@
                 <h2>{{ user.first_name }}'s Cart</h2>
                 {% if packages %}
                 <p>Holiday Details</p>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Hotel</th>
-                            <th scope="col">Room Type</th>
-                            <th scope="col">Num of Guests</th>
-                            <th scope="col">Breakfast</th>
-                            <th scope="col">Transport</th>
-                            <th scope="col">Check In Date</th>
-                            <th scope="col">Check Out Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for package in packages %}
-                        <tr>
-                            <td>{{ package.id }}</td>
-                            <td>{{ package.name }}</td>
-                            <td>{{ package.destination }}</td>
-                            <td>{{ package.hotel }}</td>
-                            <td>{{ package.roomType }}</td>
-                            <td>{{ package.numberOfGuests }}</td>
-                            <td>{{ package.breakfast }}</td>
-                            <td>{{ package.transport }}</td>
-                            <td>{{ package.checkIn }}</td>
-                            <td>{{ package.checkOut }}</td>
-                            <td>
-                                <a class="btn btn-light" href="{% url 'destination' package.destination_id %}">View Listing</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <a href="{% url 'checkout' %}" class="pull-right btn btn-primary">Proceed To Checkout</a>
-                {% else %}
-                <p>Cart is empty.</p>
-                {% endif %}
+
+                <section id="listings" class="py-4">
+                    <div class="container">
+                        <div class="row">
+                            {% for package in packages %}
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="row">
+                                    <div class="col">
+                                            <i class="fas fa-building" aria-hidden="true"></i>
+                                        {{ package.hotel }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-plane-departure" aria-hidden="true"></i>
+                                        {{ package.checkIn }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-plane-arrival" aria-hidden="true"></i>
+                                        {{ package.checkOut }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-building" aria-hidden="true"></i>
+                                        {{ package.hotel }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-bed" aria-hidden="true"></i>
+                                        {{ package.roomType }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                        {{ package.numberOfGuests }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-coffee" aria-hidden="true"></i>
+                                        {{ package.breakfast }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-bus" aria-hidden="true"></i>
+                                        {{ package.transport }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fas fa-euro-sign" aria-hidden="true"></i>
+                                        {{ package.cost }}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                        <div class="col">
+                                                <a href="#" class="btn btn-danger btn-sm" onclick="console.log('Error')">Delete from Cart</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            </p>
+                            {% endfor %}
+                            </p>
+                            <a href="{% url 'checkout' %}" class="btn btn-block btn-secondary">Proceed To Checkout</a>
+                            {% else %}
+                            <p>Cart is empty.</p>
+                            {% endif %}
+                        </div>
+                    </div>
             </div>
-        </div>
-    </div>
 </section>
 {% endblock %}
