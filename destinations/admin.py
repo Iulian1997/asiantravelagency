@@ -8,8 +8,8 @@ class DestinationAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name') # Click on name to load destination
     list_filter = ('country',)
     list_editable = ('is_published',)
-    search_fields = ('country', 'description', 'city')
-    list_per_page = 25
+    search_fields = ('country', 'city')
+    list_per_page = 30
 
 admin.site.register(Destination, DestinationAdmin)
 

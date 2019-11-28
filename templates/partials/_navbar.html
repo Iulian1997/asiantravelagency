@@ -28,14 +28,16 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                 <li
-                {% if 'dashboard' in request.path %}
+                {% if 'cart' in request.path %}
                     class="nav-item active mr-3"
                 {% else %}
                     class="nav-item mr-3"
                 {% endif %}
                 >
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        Hi {{ user.first_name }} (Dashboard)</a>
+                    <a class="nav-link" href="{% url 'order_summary' %}">
+                        {{ user.first_name }}'s Cart
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </a>
                 </li>
                 <li class="nav-item mr-3">
                     <a href="javascript:{document.getElementById('logout').submit()}"

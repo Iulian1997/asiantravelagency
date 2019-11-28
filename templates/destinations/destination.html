@@ -32,6 +32,9 @@
     </div>
 </section>
 
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
 <!-- Listing -->
 <section id="listing" class="py-4">
     <div class="container">
@@ -128,8 +131,6 @@
                                 <span class="float-right">Kyle Brown
                                 </span>
                             </li>
-
-
                         </ul>
                     </div>
                 </div>
@@ -160,31 +161,36 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'booking' %}" method="POST">
+                <form action="{% url 'package' %}" method="POST">
                     {% csrf_token %}
                     {% if user.is_authenticated %}
                     <input type="hidden" name="user_id" value="{{ user.id }}">
                     {% else %}
                     <input type="hidden" name="user_id" value="0">
                     {% endif %}
-                    <input type="hidden" name="package_id" value="{{ package.id }}">
+                    <input type="hidden" name="destination_id" value="{{ destination.id }}">
                     <div class="form-group">
                         <label for="destination_name" class="col-form-label">Destination:</label>
-                        <input type="text" name="listing" class="form-control" value="{{ destination.name }}" disabled>
+                        <input readonly type="text" name="destination" class="form-control" value="{{ destination.name }}">
                     </div>
                     <div class="form-group">
-                        <label for="inputState">Hotel:</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Hotel A</option>
-                            <option>Hotel B</option>
+                        <label for="hotel">Hotel:</label>
+                        <select id="dropdown" name="hotel" class="form-control">
+                            {% if hotels %}
+                            {% for hotel in hotels %}
+                            <option>{{ hotel.name }}</option>
+                            {% endfor %}
+                            {% else %}
+                            <option>No Hotels</option>
+                            {% endif %}
                         </select>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="inputState">Room Type:</label>
-                                    <select id="inputState" class="form-control">
+                                    <label for="roomType">Room Type:</label>
+                                    <select id="dropdown" name="roomType" class="form-control">
                                         <option selected>Single En Suite</option>
                                         <option>Double En Suite</option>
                                     </select>
@@ -194,8 +200,8 @@
                         <div class="col">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="inputState">Number of Guests:</label>
-                                    <select id="inputState" class="form-control">
+                                    <label for="numberOfGuests">Number of Guests:</label>
+                                    <select id="dropdown" name="numberOfGuests" class="form-control">
                                         <option selected>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -207,15 +213,25 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                <label class="form-check-label" for="inlineCheckbox1">Breakfast</label>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="roomType">Breakfast:</label>
+                                    <select id="dropdown" name="breakfast" class="form-control">
+                                        <option selected>Yes</option>
+                                        <option>No</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                <label class="form-check-label" for="inlineCheckbox2">Transport</label>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="numberOfGuests">Transport:</label>
+                                    <select id="dropdown" name="transport" class="form-control">
+                                        <option selected>Yes</option>
+                                        <option>No</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -234,31 +250,25 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="phone" class="col-form-label">Phone:</label>
-                                <input type="text" name="phone" class="form-control">
+                                <label for="mobile" class="col-form-label">Phone:</label>
+                                <input type="text" name="mobile" class="form-control" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <div class="well">
-                                    <div class="form-group">
-                                        <label>Check in:</label>
-                                        <input type="date" class="form-control" id="exampleInputDOB1"
-                                            placeholder="Date of Birth" required>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Check in:</label>
+                                    <input type="text" class="form-control" name="checkIn" value="{% now 'Y-m-d' %}">
                                 </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <div class="well">
-                                    <div class="form-group">
-                                        <label>Check out:</label>
-                                        <input type="date" class="form-control" id="exampleInputDOB1"
-                                            placeholder="Date of Birth" required>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Check out:</label>
+                                    <input type="text" class="form-control" name="checkOut" value="{% now 'Y-m-d' %}">
                                 </div>
                             </div>
                         </div>
@@ -266,16 +276,21 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="visa-number" class="col-form-label">Visa Number:</label>
-                                <input type="text" name="visa-number" class="form-control" required>
+                                <label for="visa" class="col-form-label">Visa Number:</label>
+                                <input type="text" name="visa" class="form-control" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="visa-number" class="col-form-label">Passport Number:</label>
-                                <input type="text" name="passport-number" class="form-control" required>
+                                <label for="passport" class="col-form-label">Passport Number:</label>
+                                <input type="text" name="passport" class="form-control" required>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                            <label for="cost" class="col-form-label">Price:</label>
+                            <input readonly type="text" name="cost" class="form-control"
+                                value="{{ destination.cost }}">
                     </div>
                     <hr>
                     <input type="submit" value="Add to Cart" class="btn btn-block btn-secondary">

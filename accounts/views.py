@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 
+from packages.models import Package
+from bookings.models import Booking
+
+
 def register(request):
     if request.method == 'POST':
         # Register User
@@ -47,7 +51,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
-            return redirect('dashboard')
+            return redirect('cart')
         else:
             messages.error(request, 'Invalid credentials.')
             return redirect('login')
@@ -60,5 +64,20 @@ def logout(request):
         messages.success(request, 'You are now logged out.')
         return redirect('index')
 
-def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+def order_summary(request):
+    user_package = Package.objects.order_by('-contact_date').filter(user_id=request.user.id)
+
+    context = {
+        'packages': user_package
+    }
+
+    return render(request, 'cart/order_summary.html', context)
+
+def checkout(request):
+    booking = Booking.objects.all()
+
+    context = {
+        'booking': booking
+    }
+
+    return render(request, 'cart/checkout.html', context)

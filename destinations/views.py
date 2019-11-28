@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage , PageNotAnInteger
 from .choices import country_choices, price_choices
 
 from .models import Destination
+from hotels.models import Hotel
 
 # Create your views here.
 
@@ -20,9 +21,11 @@ def index(request):
 
 def destination(request, destination_id):
     destination = get_object_or_404(Destination, pk=destination_id)
+    hotels = Hotel.objects.filter(destination=destination)
 
     context = {
-        'destination': destination
+        'destination': destination,
+        'hotels': hotels
     }
 
     return render(request, 'destinations/destination.html', context)
