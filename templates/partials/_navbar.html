@@ -39,6 +39,18 @@
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     </a>
                 </li>
+                <li
+                {% if 'dashboard' in request.path %}
+                    class="nav-item active mr-3"
+                {% else %}
+                    class="nav-item mr-3"
+                {% endif %}
+                >
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        Dashboard
+                        <i class="fas fa-user-circle" aria-hidden="true"></i>
+                    </a>
+                </li>
                 <li class="nav-item mr-3">
                     <a href="javascript:{document.getElementById('logout').submit()}"
                     class="nav-link">

@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 
 from packages.models import Package
 from bookings.models import Booking
+
 
 
 def register(request):
@@ -29,7 +30,7 @@ def register(request):
                     return redirect('register')
                 else:
                     # Registering User
-                    user = User.objects.create_user(username=username, password=password, email=email, 
+                    user = User.objects.create_user(username=username, password=password, email=email,
                     first_name=first_name, last_name=last_name)
                     user.save()
                     messages.success(request, 'You are now registered.')
@@ -39,6 +40,7 @@ def register(request):
             return redirect('register')
     else:
         return render(request, 'accounts/register.html')
+
 
 def login(request):
     if request.method == 'POST':
@@ -58,14 +60,17 @@ def login(request):
     else:
         return render(request, 'accounts/login.html')
 
+
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
         messages.success(request, 'You are now logged out.')
         return redirect('index')
 
+
 def order_summary(request):
-    user_package = Package.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    user_package = Package.objects.order_by(
+        '-contact_date').filter(user_id=request.user.id)
 
     context = {
         'packages': user_package
@@ -73,11 +78,34 @@ def order_summary(request):
 
     return render(request, 'cart/order_summary.html', context)
 
+
 def checkout(request):
-    booking = Package.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    booking = Package.objects.order_by(
+        '-contact_date').filter(user_id=request.user.id)
 
     context = {
         'bookings': booking
     }
 
     return render(request, 'cart/checkout.html', context)
+
+
+def dashboard(request):
+    bookings = Booking.objects.all()
+
+    context = {
+        'bookings': bookings
+    }
+    return render(request, 'accounts/dashboard.html', context)
+
+
+def delete_from_cart(request, destination_id):
+    order_item = Package.objects.filter(destination_id=destination_id)
+
+    order_item.delete()
+
+    context = {
+        'order_item': order_item
+    }
+
+    return redirect(order_summary)

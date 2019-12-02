@@ -52,5 +52,4 @@ def package(request):
         else:
             messages.error(request, 'Please login to book your holiday.')
             return redirect('/destinations/'+destination_id)
-
         

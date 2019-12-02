@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %} | Checkout {% endblock %}
+
 {% block content %}
 <section id="showcase-inner" class="py-5 text-white">
     <div class="container">
@@ -35,36 +37,56 @@
             </div>
         </div>
 
-        {% if bookings %}
-        {% for booking in bookings %}
-        <p>
-        <div class="row">
-                <div class="col-md-6">
-                <strong>Destination: </strong> {{ booking.destination }}
-            </div>
-            <div class="col-md-6">
-                €{{ booking.cost }}
-            </div>
-        </div>
-        </p>
-        {% endfor %}
-        <div class="row">
+        <form action="{% url 'booking' %}" method="POST" >
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <input type="hidden" name="is_ordered" value="True">
+            {% else %}
+            <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            {% if bookings %}
+            {% for booking in bookings %}
+            <p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="destination_name" class="col-form-label">Destination</label>
+                            <input hidden type="text" name="destination_id" class="form-control"
+                                value="{{ booking.destination_id }}">
+                            <input readonly="" type="text" name="destination" class="form-control"
+                                value="{{ booking.destination }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div class="form-group">
+                                    <label for="destination_name" class="col-form-label">Price</label>
+                                    <input readonly="" type="text" name="cost" class="form-control" value="{{ booking.cost }}">
+                                </div>
+                    </div>
+                </div>
+            </p>
+            {% endfor %}
+            <div class="row">
                 <div class="col-md-6">
                     <strong>Order Total </strong>
                 </div>
                 <div class="col-md-6">
-                    €{{ booking.cost }}
+                        {% for booking in bookings %}
+                        €{{ booking.cost }}
+                        {% endfor %}
                 </div>
             </div>
-        <br>
-        <div class="row">
-            <div class="col">
-                <a href="#" class="btn btn-block btn-secondary">Pay with Card</a>
+            <br>
+            <div class="row">
+                <div class="col">
+                        <input type="submit" value="Pay with Card" class="btn btn-block btn-secondary">
+                </div>
+                <div class="col">
+                        <input type="submit" value="Pay with PayPal" class="btn btn-block btn-secondary">
+                </div>
             </div>
-            <div class="col">
-                <a href="#" class="btn btn-block btn-secondary">Pay PayPal</a>
-            </div>
-        </div>
+        </form>
         {% else %}
         <h1>Cart is Empty</h1>
         {% endif %}
