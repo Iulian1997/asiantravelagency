@@ -47,7 +47,7 @@
                             <div class="col-md-6 col-lg-4 mb-4">
                                 <div class="row">
                                     <div class="col">
-                                            <i class="fas fa-building" aria-hidden="true"></i>
+                                        <i class="fas fa-building" aria-hidden="true"></i>
                                         {{ package.hotel }}
                                     </div>
                                 </div>
@@ -101,20 +101,21 @@
                                 </div>
                                 <br>
                                 <div class="row">
-                                        <div class="col">
-                                                <a href="{% url 'delete_from_cart' package.destination_id %}" class="btn btn-danger btn-sm"">Delete from Cart</a>
-                                        </div>
+                                    <div class="col">
+                                        <a href="{% url 'delete_from_cart' package.destination_id %}"
+                                            class="btn btn-danger btn-sm"">Delete from Cart</a>
                                     </div>
+                                </div>
                             </div>
                             </p>
                             {% endfor %}
                             </p>
-                            <a href="{% url 'checkout' %}" class="btn btn-block btn-secondary">Proceed To Checkout</a>
-                            {% else %}
-                            <p>Cart is empty.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-            </div>
-</section>
-{% endblock %}
+                            <a href=" {% url 'checkout' %}" class="btn btn-block btn-secondary">Proceed To Checkout</a>
+                                        {% else %}
+                                        <p>Cart is empty.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                </section>
+                {% endblock %}

@@ -14,3 +14,7 @@ class Booking(models.Model):
     cost = models.FloatField()
     def __str__(self):
         return self.ref_code
+
+    def get_cost(self):
+        x = self.cost / 100 * 15
+        return self.cost - x

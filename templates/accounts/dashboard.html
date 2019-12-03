@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load mathfilters %}
+
 {% block title %} | Dashboard {% endblock %}
 
 {% block content %}
@@ -46,6 +48,41 @@
                 Price: €{{ booking.cost}}
                 <a class="btn btn-light" href="{% url 'destination' booking.destination_id %}
                                         ">View Listing</a>
+
+                <div class="col-md-3">
+                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#inquiryModal">Cancel
+                        Holiday</button>
+                </div>
+
+                <div class="modal fade" id="inquiryModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="inquiryModalLabel">Cancel Your Holiday</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            {% if bookings %}
+                            <div class="modal-body">
+                                <div class="alert alert-warning alert-dismissible fade show">
+                                    <strong>Warning!</strong> There is a 15% deduction penalty fee for cancellations.
+
+                                </div>
+                                <label for="booking"></label> Destination: {{ booking.destination }}
+                                <br>
+                                <label for="booking"></label> Total Paid: €{{ booking.cost }}
+                                <br>
+                                <label for="booking"></label> Return Sum: €{{ booking.get_cost |floatformat:2}}
+                                <input type="submit" value="Cancel Now" class="btn btn-block btn-danger">
+
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
                 {% endfor %}
                 {% else %}
                 You have no booked holidays.
