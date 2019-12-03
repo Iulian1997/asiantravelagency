@@ -5,7 +5,7 @@ from packages.models import Package
 from destinations.models import Destination
 
 class Booking(models.Model):
-    ref_code = models.CharField(max_length=20)
+    ref_code = models.CharField(max_length=200)
     user_id = models.IntegerField(blank=True)
     is_ordered = models.BooleanField(default=False)
     destination = models.CharField(max_length=200)
@@ -16,5 +16,5 @@ class Booking(models.Model):
         return self.ref_code
 
     def get_cost(self):
-        x = self.cost / 100 * 15
-        return self.cost - x
+        cancel_fee = self.cost / 100 * 15
+        return self.cost - cancel_fee

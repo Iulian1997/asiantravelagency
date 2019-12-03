@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from django.core.mail import send_mail
 
 from packages.models import Package
 from bookings.models import Booking
@@ -109,3 +110,27 @@ def delete_from_cart(request, destination_id):
     }
 
     return redirect(order_summary)
+
+def cancel_holiday(request, ref_code, destination):
+    holiday = Booking.objects.filter(ref_code=ref_code)
+
+    send_mail(
+            'Holiday Cancellation Reference Number '+str(ref_code),
+            'You have cancelled your holiday to ' + destination,
+            'xJJx97x@gmail.com',
+            ['Iulian.Gherman@mycit.ie'],
+            fail_silently=False
+        )
+
+    holiday.delete()
+
+    context = {
+        'holiday': holiday
+    }
+
+    
+
+    messages.success(request, 'Holiday has now been cancelled.')
+
+
+    return redirect(dashboard)

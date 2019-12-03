@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.core.mail import send_mail
 
 from .models import Package, Hotel
 
@@ -34,13 +33,13 @@ def package(request):
                 package.save()
 
                 # Send email
-                send_mail(
-                    'Holiday Booking Confirmation',
-                    'You have booked a holiday to ' +destination +'.',
-                    'xJJx97x@gmail.com',
-                    ['Iulian.Gherman@mycit.ie'],
-                    fail_silently=False
-                )
+                #send_mail(
+                #    'Holiday Booking Confirmation',
+                #    'You have booked a holiday to ' +destination +'.',
+                #    'xJJx97x@gmail.com',
+                #    ['Iulian.Gherman@mycit.ie'],
+                #    fail_silently=False
+                #)
 
                 messages.success(request, 'Your package has been added to cart.')
                 return redirect('/destinations/'+destination_id)

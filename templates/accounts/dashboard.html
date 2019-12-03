@@ -40,18 +40,31 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>{{ user.first_name }}'s Dashboard</h2>
-
-
+                <br>
                 {% if bookings %}
                 {% for booking in bookings %}
-                Destination: {{ booking.destination}}
-                Price: €{{ booking.cost}}
-                <a class="btn btn-light" href="{% url 'destination' booking.destination_id %}
-                                        ">View Listing</a>
 
-                <div class="col-md-3">
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#inquiryModal">Cancel
-                        Holiday</button>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="row">
+                        <div class="col">
+                            <strong>Destination:</strong> {{ booking.destination }}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <strong>Price:</strong> €{{ booking.cost}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-secondary btn-sm" href="{% url 'destination' booking.destination_id %}
+                                ">View Listing</a>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#inquiryModal">Cancel
+                                Holiday</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal fade" id="inquiryModal" role="dialog">
@@ -66,15 +79,23 @@
                             {% if bookings %}
                             <div class="modal-body">
                                 <div class="alert alert-warning alert-dismissible fade show">
-                                    <strong>Warning!</strong> There is a 15% deduction penalty fee for cancellations.
+                                    <strong>Warning!</strong> There is a 15% deduction penalty fee for
+                                    cancellations.
 
                                 </div>
-                                <label for="booking"></label> Destination: {{ booking.destination }}
+                                <label for="booking"></label><strong>Destination:</strong> {{ booking.destination }}
                                 <br>
-                                <label for="booking"></label> Total Paid: €{{ booking.cost }}
+                                <label for="booking"></label><strong>Total Paid:</strong> €{{ booking.cost }}
                                 <br>
-                                <label for="booking"></label> Return Sum: €{{ booking.get_cost |floatformat:2}}
-                                <input type="submit" value="Cancel Now" class="btn btn-block btn-danger">
+                                <label for="booking"></label><strong>Return Sum:</strong>
+                                €{{ booking.get_cost |floatformat:2}}
+                                <div class="row">
+                                    <div class="col">
+                                        <br>
+                                        <a href="{% url 'cancel_holiday' booking.ref_code booking.destination %}"
+                                            class="btn btn-block btn-danger"">Confirm Cancellation</a>
+                                    </div>
+                                </div>
 
                             </div>
                             {% endif %}
