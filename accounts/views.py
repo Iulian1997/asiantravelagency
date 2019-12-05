@@ -92,7 +92,7 @@ def checkout(request):
 
 
 def dashboard(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.filter(user_id=request.user.id)
 
     context = {
         'bookings': bookings
@@ -114,21 +114,11 @@ def delete_from_cart(request, destination_id):
 def cancel_holiday(request, ref_code, destination):
     holiday = Booking.objects.filter(ref_code=ref_code)
 
-    send_mail(
-            'Holiday Cancellation Reference Number '+str(ref_code),
-            'You have cancelled your holiday to ' + destination,
-            'xJJx97x@gmail.com',
-            ['Iulian.Gherman@mycit.ie'],
-            fail_silently=False
-        )
-
     holiday.delete()
 
     context = {
         'holiday': holiday
     }
-
-    
 
     messages.success(request, 'Holiday has now been cancelled.')
 

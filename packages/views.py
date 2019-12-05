@@ -28,18 +28,15 @@ def package(request):
             # If there are no hotels
             if hotel != 'No Hotels':
 
+                user_id = request.user.id
+                has_added = Package.objects.all().filter(user_id=user_id)
+                if has_added:
+                    messages.error(request, 'You have already added a holiday destination to cart.')
+                    return redirect('/destinations/'+destination_id)
+
                 package = Package(destination=destination, destination_id=destination_id, hotel=hotel, roomType=roomType, numberOfGuests=numberOfGuests, breakfast=breakfast, transport=transport, name=name, email=email, mobile=mobile, checkIn=checkIn, checkOut=checkOut, visa=visa, passport=passport, cost=cost, user_id=user_id)
 
                 package.save()
-
-                # Send email
-                #send_mail(
-                #    'Holiday Booking Confirmation',
-                #    'You have booked a holiday to ' +destination +'.',
-                #    'xJJx97x@gmail.com',
-                #    ['Iulian.Gherman@mycit.ie'],
-                #    fail_silently=False
-                #)
 
                 messages.success(request, 'Your package has been added to cart.')
                 return redirect('/destinations/'+destination_id)
